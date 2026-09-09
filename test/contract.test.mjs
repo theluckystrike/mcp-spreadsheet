@@ -150,7 +150,7 @@ test("a tool that takes a file path or a URL opens with an imperative sentence",
 
 test("corrupt store is quarantined", { skip: "spreadsheet is stateless: it owns no store under the data dir, so there is nothing to corrupt" }, () => {});
 
-test.skip("cap: a write over the free 500-row cap writes no file at all", async (t) => {
+test("cap: a write over the free 500-row cap writes no file at all", async (t) => {
   const c = client();
   t.after(() => c.close());
   await c.init();

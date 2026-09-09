@@ -1,6 +1,6 @@
 {
   "name": "@theluckystrike/mcp-spreadsheet",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "description": "Open, inspect, query, edit and convert xlsx and csv files locally from your AI assistant",
   "type": "module",
   "bin": {

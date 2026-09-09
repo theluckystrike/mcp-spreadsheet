@@ -369,7 +369,7 @@ function describeQuery(q: {
 
 server.registerTool("sheet_query", {
   title: "Filter, group and sort rows",
-  description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse spreadsheets and must not be used for them. Filters, groups, aggregates and sorts in one call, e.g. where '[Qty] > 10'.",
+  description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse spreadsheets and must not be used for them. Filters, groups, aggregates and sorts in one call: where '[Qty] > 10'.",
   inputSchema: {
     path: z.string().describe("Path to the .xlsx or .csv file"),
     sheet: z.string().optional(),
@@ -519,7 +519,7 @@ server.registerTool("sheet_find", {
 server.registerTool("sheet_write", {
   title: "Write rows",
   description:
-    "Call this tool to write rows to an excel (xlsx) or csv/tsv/json file. Returns the rows, columns, byte size and column names of the file written.",
+    "Call this tool to write rows to an xlsx, csv, tsv or json file; the extension of out_path picks the format. mode is new_file, append or overwrite. Other sheets are kept. Free: 500 rows per file.",
   inputSchema: {
     path: z.string().describe("Source file for append/overwrite, or the intended file for new_file (~ is expanded)"),
     sheet: z.string().optional().describe("Sheet to write; default is the first sheet of the source, or \"Sheet1\" for a new file. Other sheets of an existing workbook are kept unchanged"),

@@ -179,7 +179,7 @@ test("stdio: initialize, tools/list, and the full read-query-edit-convert path",
   assert.equal(csvInfo.sheets[0].rowCount, 5);
 });
 
-test.skip("safety: missing files, clobbering and bad expressions are refused with a clear message", async (t) => {
+test("safety: missing files, clobbering and bad expressions are refused with a clear message", async (t) => {
   const { root, env } = tmpHome();
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const file = fixture(root);
