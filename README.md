@@ -2,7 +2,7 @@
 
 <!-- mirror-seo:start -->
 
-**MCP server for spreadsheets: read, query, edit and convert xlsx, csv and Excel files.** Read, query, edit and convert xlsx and csv files safely.
+**MCP server for spreadsheets: read, query, edit and convert xlsx, csv and Excel files, and builds a new spreadsheet from rows in a chat.** Read, query, edit and convert xlsx and csv files safely.
 
 Works with Claude Desktop, Claude Code, Cursor and any Model Context Protocol client. Runs on your own machine, or hosted with no install.
 
