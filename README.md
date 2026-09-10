@@ -1,13 +1,45 @@
 # mcp-spreadsheet
 
+<!-- mirror-seo:start -->
+
+**MCP server for spreadsheets: read, query, edit and convert xlsx, csv and Excel files.** Read, query, edit and convert xlsx and csv files safely.
+
+Works with Claude Desktop, Claude Code, Cursor and any Model Context Protocol client. Runs on your own machine, or hosted with no install.
+
+## Install
+
+**Hosted, nothing to install.** Point an MCP client at `https://mcp.zovo.one/mcp/spreadsheet` over streamable-http and send `Authorization: Bearer <token>`, where the token is a Pro key or a free anonymous one from <https://mcp.zovo.one/mcp/token>.
+
+**Claude Desktop, one click.** Download `spreadsheet.mcpb` from the [latest release](https://github.com/theluckystrike/mcp-servers/releases/latest) and double-click it.
+
+**From source.** The mirror is self-contained: every `@theluckystrike/*` dependency is vendored, so a fresh clone builds with no extra setup.
+
+```sh
+git clone https://github.com/theluckystrike/mcp-spreadsheet.git
+cd mcp-spreadsheet
+npm install && npm run build
+```
+
+Then point your client at the built entry point:
+
+```json
+{
+  "mcpServers": {
+    "spreadsheet": {
+      "command": "node",
+      "args": ["/absolute/path/to/mcp-spreadsheet/dist/index.js"]
+    }
+  }
+}
+```
+
+> `@theluckystrike/mcp-spreadsheet` is **not published on npm yet**, so an `npx -y @theluckystrike/mcp-spreadsheet` command will fail. The three paths above are the working ones and each is exercised by CI.
+
 ![spreadsheet demo](https://raw.githubusercontent.com/theluckystrike/mcp-servers/main/assets/demo-spreadsheet.gif)
-
-**One-click install:** download `spreadsheet.mcpb` from the [latest release](https://github.com/theluckystrike/mcp-servers/releases/latest) and double-click it in Claude Desktop.
-
-**Hosted endpoint (no install):** `https://mcp.zovo.one/mcp/spreadsheet` (streamable-http; send `Authorization: Bearer <Pro key or anonymous token from https://mcp.zovo.one/mcp/token>`).
 
 Read-only mirror of [mcp-servers/servers/spreadsheet](https://github.com/theluckystrike/mcp-servers/tree/main/servers/spreadsheet). See [MIRROR.md](MIRROR.md).
 
+<!-- mirror-seo:end -->
 
 Hand your AI assistant a spreadsheet and talk to it. Point it at any `.xlsx`, `.xlsm`, `.xlsb`, `.xls`, `.ods`, `.csv` or `.tsv` file on your machine and ask what is in it, filter it, compute a new column, or save it in another format. It handles the messy parts of real files for you: it guesses which row holds the headers, sniffs whether a CSV is separated by commas, semicolons or tabs, keeps quoted commas and newlines intact, reads numbers out of `$1,250.00` style text, and reports per-column types and empty counts. It never edits your original file: every write goes to a new path unless you explicitly choose `overwrite`. Nothing leaves the machine, and there is no API key to get.
 
