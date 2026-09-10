@@ -1,0 +1,22 @@
+{
+  "name": "mcp-spreadsheet",
+  "version": "0.21.0",
+  "description": "MCP server for spreadsheets: read, query, edit and convert xlsx, csv and Excel files, and builds a new spreadsheet from rows in a chat. Read, query, edit and convert xlsx and csv files safely.",
+  "settings": [
+    {
+      "name": "mcp.zovo.one token",
+      "description": "A free anonymous token from https://mcp.zovo.one/mcp/token, or your Pro key. One token is one data space, and it is refreshed for another 30 days on every write.",
+      "envVar": "ZOVO_MCP_TOKEN",
+      "sensitive": true
+    }
+  ],
+  "mcpServers": {
+    "spreadsheet": {
+      "httpUrl": "https://mcp.zovo.one/mcp/spreadsheet",
+      "headers": {
+        "Authorization": "Bearer ${ZOVO_MCP_TOKEN}"
+      },
+      "description": "Read, query, edit and convert xlsx and csv files safely."
+    }
+  }
+}
