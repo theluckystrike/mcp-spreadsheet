@@ -1,6 +1,6 @@
 {
   "name": "mcp-spreadsheet",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "description": "MCP server for spreadsheets: read, query, edit and convert xlsx, csv and Excel files, and builds a new spreadsheet from rows in a chat. Read, query, edit and convert xlsx and csv files safely.",
   "settings": [
     {

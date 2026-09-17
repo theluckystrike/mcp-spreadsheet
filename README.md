@@ -45,6 +45,8 @@ Read-only mirror of [mcp-servers/servers/spreadsheet](https://github.com/theluck
 
 Hand your AI assistant a spreadsheet and talk to it. Point it at any `.xlsx`, `.xlsm`, `.xlsb`, `.xls`, `.ods`, `.csv` or `.tsv` file on your machine and ask what is in it, filter it, compute a new column, or save it in another format. It handles the messy parts of real files for you: it guesses which row holds the headers, sniffs whether a CSV is separated by commas, semicolons or tabs, keeps quoted commas and newlines intact, reads numbers out of `$1,250.00` style text, and reports per-column types and empty counts. It never edits your original file: every write goes to a new path unless you explicitly choose `overwrite`. Nothing leaves the machine, and there is no API key to get.
 
+**In the [official MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/io.github.theluckystrike%2Fexcel-spreadsheet-xlsx-csv/versions/latest)** (`io.github.theluckystrike/excel-spreadsheet-xlsx-csv`).
+
 
 **Read, query and extend real spreadsheets from chat without ever touching the original file.**
 
@@ -293,7 +295,7 @@ All data stays local. Files are read from and written to your own disk, license 
 - [mcp-time-tracker](../time-tracker/README.md) -- export a CSV with `export_csv`, then query and reshape it here.
 - [mcp-invoice](../invoice/README.md) -- pull line items out of a spreadsheet before turning them into an invoice.
 - [mcp-price-tracker](../price-tracker/README.md) -- analyze exported price history as a sheet.
-- [office-suite](../office-suite/README.md) -- all four servers behind one install, one config entry.
+- [office-suite](../office-suite/README.md) -- every sibling server behind one install, one config entry.
 - Guide: [Ask questions about an Excel or CSV file from Cursor or Claude](https://mcp.zovo.one/guides/read-excel-in-cursor)
 
 ## FAQ

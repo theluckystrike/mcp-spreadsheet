@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.theluckystrike/sheets",
   "description": "Read, filter and edit spreadsheet data - xlsx and csv - from your AI chat. Local processing.",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "repository": {
     "url": "https://github.com/theluckystrike/mcp-servers",
     "source": "github",
@@ -12,8 +12,8 @@
   "packages": [
     {
       "registryType": "mcpb",
-      "identifier": "https://github.com/theluckystrike/mcp-servers/releases/download/v0.21.0/spreadsheet.mcpb",
-      "version": "0.21.0",
+      "identifier": "https://github.com/theluckystrike/mcp-servers/releases/download/v0.22.0/spreadsheet.mcpb",
+      "version": "0.22.0",
       "transport": {
         "type": "stdio"
       },
@@ -25,7 +25,21 @@
           "isSecret": true
         }
       ],
-      "fileSha256": "45d6dc93d0e17021927995fab4a171d4eccbf238e485db315312011e70591122"
+      "fileSha256": "8b7dcf5a7ca1ff26eab151ddb043fe7e4046414c729083ed24789b8e34f9d401"
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.zovo.one/mcp/spreadsheet",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer <Pro license key or anonymous token from GET https://mcp.zovo.one/mcp/token>",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
     }
   ]
 }

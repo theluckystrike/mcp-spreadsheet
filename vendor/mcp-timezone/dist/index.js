@@ -172,7 +172,7 @@ server.registerTool("now", {
 /* ---------------------------------------------------------- convert_time */
 server.registerTool("convert_time", {
     title: "Convert a time between zones",
-    description: "Convert a time from one place to others. The input time is read as wall-clock time in from_zone unless it carries an offset or a trailing Z. Accepts '2026-09-10 15:00', an ISO timestamp, or a phrase like '3pm tomorrow'.",
+    description: "Convert one time from from_zone into every zone in to_zones, marking any day change, plus the UTC instant. The time is wall-clock in from_zone unless it carries an offset or a trailing Z. '3pm tomorrow' works.",
     inputSchema: {
         time: text(MAX_ZONE_TEXT, "time").describe("'2026-09-10 15:00', '2026-09-10T15:00:00Z', '3pm tomorrow', 'now'"),
         from_zone: text(MAX_ZONE_TEXT, "from_zone").describe("Place the time is given in, e.g. 'Warsaw' or 'Europe/Warsaw'"),

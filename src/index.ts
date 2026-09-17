@@ -395,7 +395,7 @@ function describeQuery(q: {
 
 server.registerTool("sheet_query", {
   title: "Filter, group and sort rows",
-  description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse spreadsheets and must not be used for them. Filters, groups, aggregates and sorts in one call: where '[Qty] > 10'.",
+  description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse them. Filters, groups, aggregates and sorts in one call. Totals: aggregate/group_by here, never hand sums over sheet_read rows.",
   inputSchema: {
     path: z.string().describe("Path to the .xlsx or .csv file"),
     sheet: z.string().optional(),
