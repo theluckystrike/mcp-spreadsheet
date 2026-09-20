@@ -324,3 +324,5 @@ and it stores nothing of its own beyond the files you ask it to write.
 Built by [theluckystrike](https://github.com/theluckystrike). Support: support@zovo.one
 
 **Listed on the [AI Product Index](https://index.percall.dev/l/zovo-spreadsheet.html)** — live remote endpoint at [mcp.zovo.one/s/spreadsheet](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
+
+**Featured on [Awesome MCP Servers](mcpservers.org)** — [directory listing](https://mcpservers.org/servers/github-com-theluckystrike-mcp-servers-tree-main-servers-spreadsheet) | [live hosted endpoint](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
