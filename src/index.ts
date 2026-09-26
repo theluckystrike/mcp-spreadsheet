@@ -256,14 +256,14 @@ async function infoText(path: string): Promise<string> {
   return JSON.stringify(out, null, 2);
 }
 
-server.registerTool("sheet_info", {
+server.registerTool("sheet_info", { annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   title: "Spreadsheet overview",
   description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse spreadsheets and must not be used for them. Start here: sheet names, size, header row, column types and samples.",
   inputSchema: { path: z.string().describe("Path to the .xlsx/.xlsm/.xlsb/.ods/.csv/.tsv file (~ is expanded)") },
 }, guard(async ({ path }: { path: string }) => text(await infoText(path))));
 
 // ---------------------------------------------------------------- sheet_read
-server.registerTool("sheet_read", {
+server.registerTool("sheet_read", { annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   title: "Read rows",
   description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse spreadsheets and must not be used for them. Reads rows as a table, JSON or CSV; page with limit/offset or an A1 range.",
   inputSchema: {
@@ -393,7 +393,7 @@ function describeQuery(q: {
   return parts.length ? `Query: ${parts.join("; ")}` : "";
 }
 
-server.registerTool("sheet_query", {
+server.registerTool("sheet_query", { annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   title: "Filter, group and sort rows",
   description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse them. Filters, groups, aggregates and sorts in one call. Totals: aggregate/group_by here, never hand sums over sheet_read rows.",
   inputSchema: {
@@ -464,7 +464,7 @@ server.registerTool("sheet_query", {
 }));
 
 // --------------------------------------------------------------- sheet_stats
-server.registerTool("sheet_stats", {
+server.registerTool("sheet_stats", { annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   title: "Column statistics",
   description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse spreadsheets and must not be used for them. Whole-column statistics: count, empty, distinct, min, max, sum, mean, median.",
   inputSchema: { path: z.string(), sheet: z.string().optional(), columns: z.array(z.string()).optional().describe("Limit to these columns; default all") },
@@ -511,7 +511,7 @@ server.registerTool("sheet_stats", {
 }));
 
 // ---------------------------------------------------------------- sheet_find
-server.registerTool("sheet_find", {
+server.registerTool("sheet_find", { annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   title: "Find text",
   description: "Call this tool to search every cell of a spreadsheet or CSV for text; built-in file readers cannot parse spreadsheets. Matching is case insensitive. Returns cell addresses with a preview of the row each hit is on.",
   inputSchema: { path: z.string().describe("Path to the .xlsx/.xlsm/.xlsb/.ods/.csv/.tsv file (~ is expanded)"), text: z.string().describe("Text to look for; matched case insensitively anywhere inside a cell. Up to 200 hits are returned"), sheet: z.string().optional().describe("Sheet name; default searches every sheet") },
@@ -542,7 +542,7 @@ server.registerTool("sheet_find", {
 }));
 
 // --------------------------------------------------------------- sheet_write
-server.registerTool("sheet_write", {
+server.registerTool("sheet_write", { annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   title: "Write rows",
   description:
     "Call this tool to write rows to an xlsx, csv, tsv or json file; the extension of out_path picks the format. mode is new_file, append or overwrite. Other sheets are kept. Free: 500 rows per file.",
@@ -588,7 +588,7 @@ server.registerTool("sheet_write", {
 }));
 
 // ---------------------------------------------------------- sheet_add_column
-server.registerTool("sheet_add_column", {
+server.registerTool("sheet_add_column", { annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   title: "Add a column",
   description:
     "Call this tool to add a computed column and save the result to a NEW file; the source is never modified unless out_path points at it. Returns the new file path, the row count and a preview of the first rows.",
@@ -648,7 +648,7 @@ server.registerTool("sheet_add_column", {
 }));
 
 // ------------------------------------------------------------- sheet_convert
-server.registerTool("sheet_convert", {
+server.registerTool("sheet_convert", { annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   title: "Convert file",
   description: "Call this tool to convert a sheet between excel (xlsx), csv and json. Writes a new file next to the source unless out_path is given; the source is never modified. Returns the new file path with its row and column counts.",
   inputSchema: {

@@ -45,22 +45,27 @@ Read-only mirror of [mcp-servers/servers/spreadsheet](https://github.com/theluck
 
 <!-- mirror-seo:end -->
 
+**Featured on [Awesome MCP Servers](mcpservers.org)** — [directory listing](https://mcpservers.org/servers/github-com-theluckystrike-mcp-servers-tree-main-servers-spreadsheet) | [live hosted endpoint](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
+
+
 Hand your AI assistant a spreadsheet and talk to it. Point it at any `.xlsx`, `.xlsm`, `.xlsb`, `.xls`, `.ods`, `.csv` or `.tsv` file on your machine and ask what is in it, filter it, compute a new column, or save it in another format. It handles the messy parts of real files for you: it guesses which row holds the headers, sniffs whether a CSV is separated by commas, semicolons or tabs, keeps quoted commas and newlines intact, reads numbers out of `$1,250.00` style text, and reports per-column types and empty counts. It never edits your original file: every write goes to a new path unless you explicitly choose `overwrite`. Nothing leaves the machine, and there is no API key to get.
 
 **In the [official MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/io.github.theluckystrike%2Fexcel-spreadsheet-xlsx-csv/versions/latest)** (`io.github.theluckystrike/excel-spreadsheet-xlsx-csv`).
 
+**Listed on the [AI Product Index](https://index.percall.dev/l/zovo-spreadsheet.html)** — live remote endpoint at [mcp.zovo.one/s/spreadsheet](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
 
-**Read, query and extend real spreadsheets from chat without ever touching the original file.**
+
+Read, query and extend real spreadsheets from chat without ever touching the original file.
 
 ## 60-second install
 
 npm publish for `@theluckystrike/mcp-spreadsheet` is pending. Until then, the `.mcpb` one-click bundle or a clone+build
-is the working path -- both are verified below.
+is the working path, both are verified below.
 
-**One-click (.mcpb):** download `spreadsheet.mcpb` from the latest release and double-click it in Claude Desktop:
+One-click (.mcpb): download `spreadsheet.mcpb` from the latest release and double-click it in Claude Desktop:
 https://github.com/theluckystrike/mcp-servers/releases/latest
 
-**Claude Desktop** (`claude_desktop_config.json`):
+(`claude_desktop_config.json`):
 
 ```json
 {
@@ -73,13 +78,13 @@ https://github.com/theluckystrike/mcp-servers/releases/latest
 }
 ```
 
-**Claude Code:**
+Claude Code:
 
 ```sh
 claude mcp add spreadsheet -- npx -y @theluckystrike/mcp-spreadsheet
 ```
 
-**Cursor** (`.cursor/mcp.json`):
+(`.cursor/mcp.json`):
 
 ```json
 {
@@ -121,9 +126,9 @@ To run in Pro mode set `MCP_LICENSE_KEY` in the same config block, or call `lice
 | `license_activate` | Activate a Pro key (verified offline) |
 
 Resource template: `sheet://<path>` returns the `sheet_info` summary for that file.
-Resource: `sheet://recent` lists the files this server has opened since it started, most recent first (in memory only -- nothing is written to disk, so the list is empty again after a restart).
+Resource: `sheet://recent` lists the files this server has opened since it started, most recent first (in memory only, nothing is written to disk, so the list is empty again after a restart).
 
-Prompt: `explore_sheet` walks an unfamiliar file -- `sheet_info` first, then concrete `sheet_query` calls built from the columns it actually found.
+Prompt: `explore_sheet` walks an unfamiliar file, `sheet_info` first, then concrete `sheet_query` calls built from the columns it actually found.
 
 ## What you can say
 
@@ -170,7 +175,7 @@ Barbara Liskov  290
 ```
 
 The response now echoes the exact query it ran (the `Query:` line) before the numbers, so a filter you
-did not ask for -- an accidental `AND [Status] = "Closed"`, say -- is visible instead of silently
+did not ask for, an accidental `AND [Status] = "Closed"`, say, is visible instead of silently
 narrowing the answer.
 
 A second example, adding a column and saving without touching the source:
@@ -226,19 +231,19 @@ $19 one-time for this server, $39 for every server, lifetime: https://mcp.zovo.o
 
 ## How it stores data
 
-This server keeps no database of its own -- it reads and writes the spreadsheet files you point it at,
+This server keeps no database of its own, it reads and writes the spreadsheet files you point it at,
 directly on your disk, and nothing else. Every write (`sheet_write`, `sheet_add_column`, `sheet_convert`
 in `overwrite` mode) goes to a temporary file in the same directory first, then is renamed into place, so
 an interrupted write leaves either the untouched original or the complete new file, never a truncated
 one. Because there is no shared state file, there is no advisory lock to take: two calls writing to two
 different output paths cannot collide, and a call to `overwrite` the same file twice in a row is simply
-two writes in sequence. To back up your data, back up the spreadsheet files themselves -- there is
+two writes in sequence. To back up your data, back up the spreadsheet files themselves, there is
 nothing else to copy.
 
 ## Limits and honest caveats
 
 - Free reads cap at 5,000 rows and 5 MB; free writes cap at 500 rows per file and **refuse rather than
-  truncate** -- you get an error naming the row count and the cap, never a shorter file that looks
+  truncate**, you get an error naming the row count and the cap, never a shorter file that looks
   complete.
 - The hard ceiling is 50 MB regardless of tier; a file over that is refused outright with a clear message
   rather than risking memory exhaustion.
@@ -273,7 +278,7 @@ nothing else to copy.
 - **Using the clone path**: the server binary is `servers/spreadsheet/dist/index.js` after
   `npm run build`. Point your client's `command` at `node` with that absolute path as the only argument.
 - **Node version**: requires Node >= 18. Check with `node -v`.
-- **"Path does not exist"**: the message includes the resolved absolute path (with `~` expanded) -- check
+- **"Path does not exist"**: the message includes the resolved absolute path (with `~` expanded), check
   it against where the file actually lives, especially inside a sandboxed or containerized client.
 - **A write is refused with a row-count message**: you hit the free 500-row write cap. Filter the data
   down with `sheet_query` first, write in batches, or activate Pro.
@@ -294,37 +299,34 @@ All data stays local. Files are read from and written to your own disk, license 
 
 ## Pairs with
 
-- [mcp-time-tracker](../time-tracker/README.md) -- export a CSV with `export_csv`, then query and reshape it here.
-- [mcp-invoice](../invoice/README.md) -- pull line items out of a spreadsheet before turning them into an invoice.
-- [mcp-price-tracker](../price-tracker/README.md) -- analyze exported price history as a sheet.
-- [office-suite](../office-suite/README.md) -- every sibling server behind one install, one config entry.
+- [mcp-time-tracker](../time-tracker/README.md), export a CSV with `export_csv`, then query and reshape it here.
+- [mcp-invoice](../invoice/README.md), pull line items out of a spreadsheet before turning them into an invoice.
+- [mcp-price-tracker](../price-tracker/README.md), analyze exported price history as a sheet.
+- [office-suite](../office-suite/README.md), every sibling server behind one install, one config entry.
 - Guide: [Ask questions about an Excel or CSV file from Cursor or Claude](https://mcp.zovo.one/guides/read-excel-in-cursor)
 
 ## FAQ
 
-**Does it handle a spreadsheet with a title row above the headers?**
 Yes. `sheet_info` guesses the header row and reports which row it picked, so an export with a title line
 and a blank line above the real headers opens correctly without you specifying anything.
 
-**Can it group and sum, or does it only filter?**
 It groups. `sheet_query` takes `group_by` plus `aggregate` with sum, count, avg, min or max, and can sort
 by an aggregate alias, so top-N-by-category questions are a single call.
 
-**Will it overwrite my original file?**
 No, not unless you explicitly pass an output path that points at the source. `sheet_add_column` and
 `sheet_convert` write a new file next to the original by default.
 
-**What happens on the free tier with a file bigger than the limit?**
 Reads return the first 5,000 rows with a note naming what was omitted. Writes over 500 rows are refused
 outright rather than producing a truncated file, and the message tells you the row count, the cap and a
 free way round.
 
-**Is my data sent anywhere?**
 No. The server runs locally on your machine and reads your files directly. It makes no network requests,
 and it stores nothing of its own beyond the files you ask it to write.
 
 Built by [theluckystrike](https://github.com/theluckystrike). Support: support@zovo.one
 
-**Listed on the [AI Product Index](https://index.percall.dev/l/zovo-spreadsheet.html)** — live remote endpoint at [mcp.zovo.one/s/spreadsheet](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
+## Use these docs as an MCP server
 
-**Featured on [Awesome MCP Servers](mcpservers.org)** — [directory listing](https://mcpservers.org/servers/github-com-theluckystrike-mcp-servers-tree-main-servers-spreadsheet) | [live hosted endpoint](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
+Any MCP client (Claude, Cursor, Windsurf, VS Code) can read this repository's documentation directly via GitMCP — no install:
+
+- Docs MCP URL: https://gitmcp.io/theluckystrike/mcp-spreadsheet
