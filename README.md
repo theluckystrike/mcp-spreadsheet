@@ -297,6 +297,14 @@ nothing else to copy.
 
 All data stays local. Files are read from and written to your own disk, license keys are verified offline with an embedded public key, and the server makes no network requests at all.
 
+## Repeated checks on CSV exports
+
+For a repeated CSV export workflow, the [local CSV rule-check guide](https://sheet-compare.zovo.one/repeatable-csv-checks) shows how to check additions, removals and maximum absolute price increases against one saved policy. Try the [free browser demo](https://csv-policy-intent-20261006.lipmichal.workers.dev/?source=sheet-compare&placement=overview-v10) before deciding whether the exact rules fit your files; your CSV data stays in that demo's browser and is not transferred from this MCP server.
+
+The guide describes a **separate proposed finite offline Node CLI pack at USD 7 once**. No live checkout or preorder is available, and it is not part of this MCP server's Pro license. The free demo performs the same rule logic; the proposed paid benefit is a reusable local bundle and CLI workflow. It accepts only UTF-8 CSV with identical ordered headers and a single unique key, up to 1 MB and 5,000 rows per file. It does not import into a store or guarantee import safety.
+
+Optional [asynchronous workflow feedback](https://github.com/theluckystrike/mcp-servers/discussions/26) can help identify repeated supported CSV checks, one-off uses, or inputs that need mapping first. Share only general workflow information; no CSV files, contact details, calls or payment are needed.
+
 ## Pairs with
 
 - [mcp-time-tracker](../time-tracker/README.md), export a CSV with `export_csv`, then query and reshape it here.
