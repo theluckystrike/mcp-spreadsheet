@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.theluckystrike/timezone-world-clock-meeting-slots-overlap-ics",
   "description": "Time zone conversion, meeting-slot finding across countries, DST checks and .ics invites. All.",
-  "version": "0.22.0",
+  "version": "0.22.6",
   "repository": {
     "url": "https://github.com/theluckystrike/mcp-servers",
     "source": "github",
@@ -13,7 +13,7 @@
     {
       "registryType": "mcpb",
       "identifier": "https://github.com/theluckystrike/mcp-servers/releases/download/v0.22.0/timezone.mcpb",
-      "version": "0.22.0",
+      "version": "0.22.6",
       "transport": {
         "type": "stdio"
       },
@@ -25,21 +25,7 @@
           "isSecret": true
         }
       ],
-      "fileSha256": "ac27054f2f869515c8d7d8caa7eaffd8ee7a5ef3e48e1935008b3771c99461b8"
-    }
-  ],
-  "remotes": [
-    {
-      "type": "streamable-http",
-      "url": "https://mcp.zovo.one/mcp/timezone",
-      "headers": [
-        {
-          "name": "Authorization",
-          "description": "Bearer <Pro license key or anonymous token from GET https://mcp.zovo.one/mcp/token>",
-          "isRequired": true,
-          "isSecret": true
-        }
-      ]
+      "fileSha256": "901111f398b1fa1b56551b37022f1279024e5f6dbd48d4ac3b578f101eb74aeb"
     }
   ]
 }

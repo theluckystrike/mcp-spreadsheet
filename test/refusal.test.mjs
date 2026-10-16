@@ -1,0 +1,7 @@
+import test from'node:test';import assert from'node:assert/strict';import{join}from'node:path';import{writeFileSync,existsSync,readFileSync}from'node:fs';import{localClient}from'./refusal-client.mjs';
+test('spreadsheet three write refusals are errors without output; truncated reads remain successful',async()=>{const c=await localClient();try{
+ const rows=Array.from({length:501},(_,i)=>({n:i,label:'synthetic'}));const denied=join(c.dir,'denied.csv');const write=await c.call('sheet_write',{path:denied,mode:'new_file',rows});assert.equal(write.isError,true);assert.match(write.text,/Nothing was written/);assert(!existsSync(denied));
+ const path=join(c.dir,'synthetic.csv');writeFileSync(path,'n,label\n'+rows.map(r=>`${r.n},${r.label}`).join('\n')+'\n');const original=readFileSync(path,'utf8');
+ for(const [name,args]of[['sheet_convert',{path,to:'json',out_path:join(c.dir,'converted.json')}],['sheet_add_column',{path,name:'double',formula:'[n] * 2',out_path:join(c.dir,'plus.csv')}]]){const r=await c.call(name,args);assert.equal(r.isError,true);assert.match(r.text,/Nothing was written/);assert(!existsSync(args.out_path));}assert.equal(readFileSync(path,'utf8'),original);
+ const large=join(c.dir,'large.csv');writeFileSync(large,'n\n'+Array.from({length:5100},(_,i)=>i).join('\n')+'\n');const read=await c.call('sheet_read',{path:large,limit:2});assert(!read.isError,read.text);assert.match(read.text,/Pro feature/);assert.match(read.text,/5,?000/);
+ }finally{await c.close();}});

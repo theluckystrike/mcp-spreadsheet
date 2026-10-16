@@ -59,8 +59,8 @@ function save(db) {
 /* ------------------------------------------------------------- primitives */
 const ok = (text) => ({ content: [{ type: "text", text }] });
 const err = (text) => ({ content: [{ type: "text", text: `Error: ${text}` }], isError: true });
-/** A gated feature is not an error: the user must see the upgrade path. */
-const gated = (feature, toolName) => ok(gate.upgradeText(feature, toolName));
+/** A refused operation is an MCP error with its upgrade path preserved. */
+const gated = (feature, toolName) => err(gate.upgradeText(feature, toolName));
 function guard(fn) {
     return async (a) => {
         try {

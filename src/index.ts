@@ -395,7 +395,7 @@ function describeQuery(q: {
 
 server.registerTool("sheet_query", { annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   title: "Filter, group and sort rows",
-  description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse them. Filters, groups, aggregates and sorts in one call. Totals: aggregate/group_by here, never hand sums over sheet_read rows.",
+  description: "Call this tool for any spreadsheet or CSV file path; built-in file readers cannot parse spreadsheets and must not be used for them. Filter, group, aggregate and sort in one call; never hand sums over sheet_read rows.",
   inputSchema: {
     path: z.string().describe("Path to the .xlsx or .csv file"),
     sheet: z.string().optional(),
@@ -581,7 +581,7 @@ server.registerTool("sheet_write", { annotations: { readOnlyHint: false, destruc
   }
   if (extname(target) === "") throw new UserError(`out_path ${target} has no file extension; use .xlsx, .csv, .tsv or .json`);
   const refusal = writeCapRefusal(matrix.length, "This write", `write the rows in batches of ${FREE_WRITE_ROWS} or fewer to separate files, or filter the data down first (sheet_query with a where filter) and write only the rows you need.`, "sheet_write");
-  if (refusal) return withNotes(notes, refusal);
+  if (refusal) return fail([refusal, ...notes].filter(Boolean).join("\n\n"));
   writeMatrix(target, headers, matrix, sheetName, base);
   const size = statSync(target).size;
   return withNotes(notes, `Wrote ${matrix.length} rows x ${headers.length} columns to ${target} (${size} bytes, mode ${mode}).\nColumns: ${headers.join(", ")}`);
@@ -641,7 +641,7 @@ server.registerTool("sheet_add_column", { annotations: { readOnlyHint: false, de
   const target = out_path ? expandPath(out_path) : outputPath(o.wb.path, undefined, `-plus-${String(name).replace(/[^A-Za-z0-9_-]+/g, "_")}`);
   if (!out_path && existsSync(target)) throw new UserError(`${target} already exists; pass out_path to choose another name`);
   const refusal = writeCapRefusal(matrix.length, `The file with the new column`, `narrow the sheet first with sheet_query (for example a where filter on the rows you care about, as: "csv", saved with sheet_write), then add the column to that smaller file; or use sheet_stats / sheet_query aggregates if you only need the totals rather than the whole file.`, "sheet_add_column");
-  if (refusal) return withNotes(notes, refusal);
+  if (refusal) return fail([refusal, ...notes].filter(Boolean).join("\n\n"));
   writeMatrix(target, headers, matrix, o.ls.name);
   const preview = renderTable(headers, matrix.slice(0, 5));
   return withNotes(notes, `Added column ${JSON.stringify(name)} and wrote ${matrix.length} rows to ${target}. The original file was not changed.\n\n${preview}`);
@@ -664,7 +664,7 @@ server.registerTool("sheet_convert", { annotations: { readOnlyHint: false, destr
   if (target === o.wb.path) throw new UserError("the converted file would overwrite the source; pass out_path");
   if (!out_path && existsSync(target)) throw new UserError(`${target} already exists; pass out_path to choose another name`);
   const refusal = writeCapRefusal(o.table.rows.length, "The converted file", `filter first with sheet_query (where + limit, as: "csv") and save that subset, or convert the sheet in ${FREE_WRITE_ROWS}-row slices.`, "sheet_convert");
-  if (refusal) return withNotes(notes, refusal);
+  if (refusal) return fail([refusal, ...notes].filter(Boolean).join("\n\n"));
   writeMatrix(target, o.table.headers, o.table.rows, o.ls.name);
   return withNotes(notes, `Converted ${o.wb.path} [${o.ls.name}] to ${target} (${o.table.rows.length} rows, ${o.table.headers.length} columns).`);
 }));

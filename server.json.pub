@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.theluckystrike/pivot",
+  "description": "Group, aggregate and pivot spreadsheet or CSV data from your AI chat: filters, sums, sorts.",
+  "version": "0.22.6",
+  "repository": {
+    "url": "https://github.com/theluckystrike/mcp-servers",
+    "source": "github",
+    "subfolder": "servers/spreadsheet"
+  },
+  "websiteUrl": "https://mcp.zovo.one/s/spreadsheet",
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/theluckystrike/mcp-servers/releases/download/v0.22.0/spreadsheet.mcpb",
+      "version": "0.22.5",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "MCP_LICENSE_KEY",
+          "description": "Optional Pro license key (MCPL1....). Verified offline.",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ],
+      "fileSha256": "3dac916b2219a6b1028ddc92c8fceea01a4014d557392b9cc8e0700eae8498d1"
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.zovo.one/mcp/spreadsheet"
+    }
+  ]
+}

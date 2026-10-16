@@ -294,6 +294,6 @@ letting anyone improvise an address.
 
 ## Use these docs as an MCP server
 
-Any MCP client (Claude, Cursor, Windsurf, VS Code) can read this repository's documentation directly via GitMCP — no install:
+Any MCP client (Claude, Cursor, Windsurf, VS Code) can read this repository's documentation directly via GitMCP - no install:
 
 - Docs MCP URL: https://gitmcp.io/theluckystrike/mcp-timezone

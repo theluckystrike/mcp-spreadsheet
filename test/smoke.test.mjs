@@ -2,6 +2,7 @@
 // lives only in the monorepo (keys/license-private.pem); run them there.
 // Mirror note: tests that run a script from the monorepo's scripts/ directory are
 // skipped here. That directory is not part of a server folder; run them in the monorepo.
+import "./_tmp-scope.mjs"; // run-scoped TMPDIR, removed on exit
 import test from "node:test";
 import assert from "node:assert/strict";
 import { spawn, execFileSync } from "node:child_process";
@@ -10,6 +11,8 @@ import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as XLSX from "xlsx";
+import * as sheetFixtureFs from "node:fs";
+XLSX.set_fs(sheetFixtureFs);
 
 const here = dirname(fileURLToPath(import.meta.url));
 const ENTRY = join(here, "..", "dist", "index.js");
@@ -225,7 +228,7 @@ test.skip("free write cap: 300 rows write in full, 600 rows write nothing at all
   // free: 600 rows is over the cap - D-1: refuse, write zero bytes, no partial file
   const bigOut = join(root, "free-600.csv");
   const br = await free.call("sheet_write", { path: bigOut, mode: "new_file", rows: big });
-  assert.equal(br.isError, false, "an over-cap write is a gated message, not an error");
+  assert.equal(br.isError, true, "an over-cap write is a refused operation");
   assert.match(br.text, /Nothing was written/);
   assert.match(br.text, /600 rows/);
   assert.match(br.text, /at most 500 rows/);

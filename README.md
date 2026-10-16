@@ -6,15 +6,15 @@
 
 Works with Claude Desktop, Claude Code, Cursor and any Model Context Protocol client. Runs on your own machine, or hosted with no install.
 
-Product page: <https://mcp.zovo.one/s/spreadsheet> — what it does, the tools it exposes, and a live token endpoint.
+Product page: <https://mcp.zovo.one/s/spreadsheet> — capabilities, free limits and supported installation paths.
 
 ## Install
 
-**Hosted, nothing to install.** Get a token from <https://mcp.zovo.one/mcp/connect> (the connect page) or <https://mcp.zovo.one/mcp/token> (the same token as JSON); a free anonymous one is issued on the spot and a Pro key works the same way. Then point an MCP client at `https://mcp.zovo.one/mcp/spreadsheet` over streamable-http and send the token as `Authorization: Bearer <token>`.
+**Hosted, nothing to install.** Get a token from <https://mcp.zovo.one/mcp/connect?acq=github> (the connect page) or <https://mcp.zovo.one/mcp/token> (the same token as JSON); a free anonymous one is issued on the spot and a Pro key works the same way. Then point an MCP client at `https://mcp.zovo.one/mcp/spreadsheet` over streamable-http and send the token as `Authorization: Bearer <token>`.
 
 If your client cannot set headers, put the token in the path instead: `https://mcp.zovo.one/mcp/spreadsheet/t/<token>`. Both forms work. The bare URL with no token answers 401 on `tools/call`, so the token is not optional.
 
-**Claude Desktop, one click.** Download `spreadsheet.mcpb` from the [latest release](https://github.com/theluckystrike/mcp-servers/releases/latest) and double-click it.
+**Claude Desktop, one click.** Download `spreadsheet.mcpb` from the [bundle catalog](https://mcp.zovo.one/downloads#spreadsheet) and double-click it.
 
 **From source.** The mirror is self-contained: every `@theluckystrike/*` dependency is vendored, so a fresh clone builds with no extra setup.
 
@@ -45,70 +45,56 @@ Read-only mirror of [mcp-servers/servers/spreadsheet](https://github.com/theluck
 
 <!-- mirror-seo:end -->
 
-**Featured on [Awesome MCP Servers](mcpservers.org)** — [directory listing](https://mcpservers.org/servers/github-com-theluckystrike-mcp-servers-tree-main-servers-spreadsheet) | [live hosted endpoint](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
+**Featured on [Awesome MCP Servers](mcpservers.org)** - [directory listing](https://mcpservers.org/servers/github-com-theluckystrike-mcp-servers-tree-main-servers-spreadsheet) | [live hosted endpoint](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
 
 
 Hand your AI assistant a spreadsheet and talk to it. Point it at any `.xlsx`, `.xlsm`, `.xlsb`, `.xls`, `.ods`, `.csv` or `.tsv` file on your machine and ask what is in it, filter it, compute a new column, or save it in another format. It handles the messy parts of real files for you: it guesses which row holds the headers, sniffs whether a CSV is separated by commas, semicolons or tabs, keeps quoted commas and newlines intact, reads numbers out of `$1,250.00` style text, and reports per-column types and empty counts. It never edits your original file: every write goes to a new path unless you explicitly choose `overwrite`. Nothing leaves the machine, and there is no API key to get.
 
 **In the [official MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/io.github.theluckystrike%2Fexcel-spreadsheet-xlsx-csv/versions/latest)** (`io.github.theluckystrike/excel-spreadsheet-xlsx-csv`).
 
-**Listed on the [AI Product Index](https://index.percall.dev/l/zovo-spreadsheet.html)** — live remote endpoint at [mcp.zovo.one/s/spreadsheet](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
+**Listed on the [AI Product Index](https://index.percall.dev/l/zovo-spreadsheet.html)** - live remote endpoint at [mcp.zovo.one/s/spreadsheet](https://mcp.zovo.one/s/spreadsheet), free tier, no signup.
 
 
 Read, query and extend real spreadsheets from chat without ever touching the original file.
 
 ## 60-second install
 
-npm publish for `@theluckystrike/mcp-spreadsheet` is pending. Until then, the `.mcpb` one-click bundle or a clone+build
-is the working path, both are verified below.
+Use [**spreadsheet.mcpb v0.22.9**](https://github.com/theluckystrike/mcp-servers/releases/download/v0.22.9/spreadsheet.mcpb) in Claude Desktop. [Published checksums](https://github.com/theluckystrike/mcp-servers/releases/download/v0.22.9/SHA256SUMS.txt) and the [versioned download catalog](https://mcp.zovo.one/downloads#spreadsheet) identify the exact release. The npm package is not published.
 
-One-click (.mcpb): download `spreadsheet.mcpb` from the latest release and double-click it in Claude Desktop:
-https://github.com/theluckystrike/mcp-servers/releases/latest
-
-(`claude_desktop_config.json`):
-
-```json
-{
-  "mcpServers": {
-    "spreadsheet": {
-      "command": "npx",
-      "args": ["-y", "@theluckystrike/mcp-spreadsheet"]
-    }
-  }
-}
-```
-
-Claude Code:
+For a source installation, use Node.js 22 or newer and build the shared dependency first:
 
 ```sh
-claude mcp add spreadsheet -- npx -y @theluckystrike/mcp-spreadsheet
-```
-
-(`.cursor/mcp.json`):
-
-```json
-{
-  "mcpServers": {
-    "spreadsheet": {
-      "command": "npx",
-      "args": ["-y", "@theluckystrike/mcp-spreadsheet"]
-    }
-  }
-}
-```
-
-The `npx` form above starts working the moment the package is published. Until then, use the .mcpb bundle above, or
-build from source with exactly these three commands:
-
-```sh
-git clone https://github.com/theluckystrike/mcp-servers.git && cd mcp-servers
-npm install
+git clone https://github.com/theluckystrike/mcp-servers.git
+cd mcp-servers
+npm ci
+node scripts/bootstrap-timezone.mjs
 npm run build -w packages/mcp-license -w servers/spreadsheet
 ```
 
-Then point your client's `command` at `node` with one arg: the absolute path to `servers/spreadsheet/dist/index.js`.
+Merge this entry into Claude Desktop's `mcpServers`, or into `.cursor/mcp.json` for Cursor. Replace the absolute path with your checkout:
+
+```json
+{
+  "mcpServers": {
+    "spreadsheet": {
+      "command": "node",
+      "args": ["/absolute/path/mcp-servers/servers/spreadsheet/dist/index.js"]
+    }
+  }
+}
+```
+
+For Claude Code:
+
+```sh
+claude mcp add spreadsheet -- node /absolute/path/mcp-servers/servers/spreadsheet/dist/index.js
+```
 
 To run in Pro mode set `MCP_LICENSE_KEY` in the same config block, or call `license_activate` once with your key.
+
+## Spreadsheet update
+
+Version 0.22.9 uses the vendor's patched SheetJS 0.20.3. Numeric date cells now follow the time actually stored in the workbook. Some numeric-date files produced by older versions can display 30 seconds differently in historical-offset timezones such as Ho Chi Minh. No guessed offset is added to your data. Reading does not rewrite the source file.
 
 ## Tools
 
@@ -335,6 +321,6 @@ Built by [theluckystrike](https://github.com/theluckystrike). Support: support@z
 
 ## Use these docs as an MCP server
 
-Any MCP client (Claude, Cursor, Windsurf, VS Code) can read this repository's documentation directly via GitMCP — no install:
+Any MCP client (Claude, Cursor, Windsurf, VS Code) can read this repository's documentation directly via GitMCP - no install:
 
 - Docs MCP URL: https://gitmcp.io/theluckystrike/mcp-spreadsheet

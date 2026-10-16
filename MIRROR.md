@@ -5,7 +5,7 @@ The source of truth for this server is the monorepo:
 https://github.com/theluckystrike/mcp-servers/tree/main/servers/spreadsheet
 
 Issues and pull requests belong there, not here. Anything pushed to this repository is
-overwritten on the next sync, which squashes the monorepo folder into a single commit.
+replaced from the monorepo on the next sync. Mirror history is preserved with new sync commits.
 
 ## Why the mirror exists
 

@@ -15,5 +15,6 @@
         "isSecret": true
       }
     ]
-  }
+  },
+  "version": "0.22.9"
 }
